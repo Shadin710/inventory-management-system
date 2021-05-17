@@ -1,4 +1,22 @@
+<?php
+    session_start();
+    if(empty($_SESSION['username']))
+    {
+        header("Location:index.php");
+    }
+    include_once 'connection/db_connection.php';
+    $sql_rooms = 'SELECT * FROM room_number';
+    $room_object = mysqli_query($conn,$sql_rooms) Or die("Failed to query " . mysqli_error($conn));
+    $rooms_sold = mysqli_fetch_assoc($room_object);
 
+    $sql_report = 'SELECT * FROM report';
+    $report_object = mysqli_query($conn,$sql_report) Or die("Failed to query " . mysqli_error($conn));
+    $report = mysqli_fetch_assoc($report_object);
+
+    $sql_warehouse =  'SELECT * FROM warehouse';
+    $warehouse_object = mysqli_query($conn,$sql_warehouse) Or die("Failed to query " . mysqli_error($conn));
+    $warehouse = mysqli_fetch_assoc($warehouse_object);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
