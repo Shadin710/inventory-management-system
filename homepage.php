@@ -6,11 +6,16 @@
     }
     include_once 'connection/db_connection.php';
     $sql_rooms = 'SELECT * FROM room_number';
-    $room_object = mysqli_query($conn,$sql_rooms) Or die("Failed to query" . mysqli_error($conn));
+    $room_object = mysqli_query($conn,$sql_rooms) Or die("Failed to query " . mysqli_error($conn));
     $rooms_sold = mysqli_fetch_assoc($room_object);
-    $sql_report = 'SELECT * FROM report';
-    $report_object
 
+    $sql_report = 'SELECT * FROM report';
+    $report_object = mysqli_query($conn,$sql_report) Or die("Failed to query " . mysqli_error($conn));
+    $report = mysqli_fetch_assoc($report_object);
+
+    $sql_warehouse =  'SELECT * FROM warehouse';
+    $warehouse_object = mysqli_query($conn,$sql_warehouse) Or die("Failed to query " . mysqli_error($conn));
+    $warehouse = mysqli_fetch_assoc($warehouse_object);
 ?>
 
 <!DOCTYPE html>
@@ -266,29 +271,29 @@ btn-menu {
         <ul class="sidebar-nav">
             <li class="sidebar-brand">
                 <a href="#">
-                    Bootdey.com
+                    Welcome <?php $_SESSION['username']?>
                 </a>
             </li>
             <li>
-                <a href="#">Dashboard</a>
+                <a href="homepage.php">Dashboard</a>
             </li>
             <li>
-                <a href="#">Shortcuts</a>
+                <a href="form.php">Entry</a>
             </li>
             <li>
-                <a href="#">Overview</a>
+                <a href="report.php">Report</a>
             </li>
             <li>
-                <a href="#">Events</a>
+                <a href="supplier.php">Supplier</a>
             </li>
             <li class="active">
-                <a href="#">About</a>
+                <a href="setting.php">Settings</a>
             </li>
             <li>
-                <a href="#">Services</a>
+                <a href="services.php">Services</a>
             </li>
             <li>
-                <a href="#">Contact</a>
+                <a href="logout.php">Logout</a>
             </li>
         </ul>
     </div>
