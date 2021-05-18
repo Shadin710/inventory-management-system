@@ -282,7 +282,7 @@ background:#eee;
     font-size: 0.9em;
     line-height: 1.9em;
 }
-
+ 
 .search table tr td.rate {
     color: #f39c12;
     line-height: 50px;
