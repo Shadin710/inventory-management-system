@@ -80,7 +80,7 @@
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
 					<label for="eMail">Product Name</label>
-					<input type="text" class="form-control" id="eMail" name="product_name" placeholder="Product Name">
+					<input type="text" class="form-control" id="eMail" name="pName" placeholder="Product Name">
 				</div>
 			</div>
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
