@@ -1,6 +1,10 @@
 <?php
     session_start();
 
+    if (empty($_SESSION['username'])) 
+    {
+        header("Location:index.php");
+    }
     include_once 'connection/db_connection.php';
 
     $sql_product = 'SELECT * FROM articles';
