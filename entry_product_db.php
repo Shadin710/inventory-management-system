@@ -27,7 +27,7 @@
         $sPhone = $_POST['sPhone'];
         $sMobile = $_POST['sMobile'];
         $sEmail = $_POST['sEmail'];
-
+        $ratings = $_POST['ratings']
         $sql_article = "INSERT INTO articles(Product_Name,category,pDescription,Under_Stock,room,buy_price,sell_price,lotto,dop,dos,expire,supplier_name) VALUES ('$pNAME','$category','$pDescription','$uStock','$room_number','$buyPrice','$sellPrice','$lotto','$dop','$dos','$expire','$sName')";
 
         if(!mysqli_query($conn,$sql_article))
@@ -36,7 +36,7 @@
         }
         else
         {
-            $sql_supplier ="INSERT INTO supplier(cName,cEmail,sName,sAddress,sCategory,sEmail,sMobile,sPhone) VALUES ('$cName','$cEmail','$sName','$sAddress','$sCategory','$sEmail','$sMobile','$sPhone')";
+            $sql_supplier ="INSERT INTO supplier(cName,cEmail,sName,sAddress,sCategory,sEmail,sMobile,sPhone,ratings) VALUES ('$cName','$cEmail','$sName','$sAddress','$sCategory','$sEmail','$sMobile','$sPhone','$ratings')";
 
             if (!mysqli_query($conn,$sql_supplier)) 
             {

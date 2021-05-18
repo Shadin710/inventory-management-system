@@ -211,6 +211,19 @@
 					<input type="email" class="form-control" id="zIp" name= "sEmail" placeholder="Email">
 				</div>
 			</div>
+			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="form-group">
+					<label for="fullName">Supplier Rating</label>
+                    <select name="ratings" class="form-control" id="fullName">
+                        <option value="">Give a rating</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3"> 3</option>
+                        <option value="4">4</option>
+						<option value="5">5</option>
+                    </select>
+				</div>
+			</div>
 		</div>
 		<div class="row gutters">
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
