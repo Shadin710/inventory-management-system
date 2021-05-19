@@ -5,15 +5,15 @@
         header("Location:index.php");
     }
     include_once 'connection/db_connection.php';
-    $sql_rooms = 'SELECT * FROM room_number';
+    $sql_rooms = 'SELECT * FROM articles';
     $room_object = mysqli_query($conn,$sql_rooms) Or die("Failed to query " . mysqli_error($conn));
     $rooms_sold = mysqli_fetch_assoc($room_object);
 
-    $sql_report = 'SELECT * FROM report';
+    $sql_report = 'SELECT * FROM supplier';
     $report_object = mysqli_query($conn,$sql_report) Or die("Failed to query " . mysqli_error($conn));
     $report = mysqli_fetch_assoc($report_object);
 
-    $sql_warehouse =  'SELECT * FROM warehouse';
+    $sql_warehouse =  'SELECT * FROM rooms';
     $warehouse_object = mysqli_query($conn,$sql_warehouse) Or die("Failed to query " . mysqli_error($conn));
     $warehouse = mysqli_fetch_assoc($warehouse_object);
 ?>
@@ -331,10 +331,10 @@ background:#eee;
                 </a>
             </li>
             <li>
-                <a href="homepage.php">Dashboard</a>
+                <a href="homepage.php">Homepage</a>
             </li>
             <li>
-                <a href="form.php">Entry</a>
+                <a href="entry_product.php">Entry</a>
             </li>
             <li>
                 <a href="report.php">Report</a>
