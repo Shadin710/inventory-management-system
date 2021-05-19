@@ -15,12 +15,12 @@
         if(!mysqli_query($conn,$create_admin_sql))
         {
             
-            die("Failed to register admin", mysqli_error($conn))
+            die("Failed to register admin" . mysqli_error($conn));
         }
         else
         {
             //sucessfully registered alert will be here
-            header("Location:index.php")
+            header("Location:index.php");
         }
     }
 
