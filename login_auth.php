@@ -3,11 +3,12 @@
 
     session_start();
     include_once 'connection/db_connection.php';
-    $username = $_POST['username'];
-    $pass = $_POST['pass'];
+
 
     if ($_SERVER['REQUEST_METHOD']=='POST')
     {
+        $username = $_POST['username'];
+        $pass = $_POST['pass'];
 
     
         $sql = "SELECT * FROM admin_info WHERE pass = '$pass' and username = '$username'";
@@ -15,7 +16,7 @@
 
         $row = mysqli_fetch_assoc($result);
         $id = $row['id'];
-        if($row['email']==$email && $row['pass'] == $pass)
+        if($row['username']==$username && $row['pass'] == $pass)
         {
             $_SESSION['owner_id'] = $id;
             $_SESSION['username']=$username;
