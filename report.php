@@ -1,4 +1,23 @@
+<?php
+   session_start();
+   if (empty($_SESSION['username'])) 
+   {
+      header("Location:index.php");
+   }
 
+
+   
+   include_once 'connection/db_connection.php';
+   $sql_report = 'SELECT * FROM articles';
+   $report_object = mysqli_query($conn,$sql_report) Or die("Failed to query " . mysqli_error($conn));
+   $count_doc = mysqli_num_rows($report_object);
+
+  
+
+  
+
+
+?>
 
 
 <!DOCTYPE html>
@@ -19,31 +38,33 @@
 <div id="wrapper" class="wrapper-content">
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
+        <li class="sidebar-brand">
             <li class="sidebar-brand">
                 <a href="#">
-                    Bootdey.com
+                   Welcome
                 </a>
             </li>
             <li>
-                <a href="#">Dashboard</a>
+                <a href="homepage.php">Homepage</a>
             </li>
             <li>
-                <a href="#">Shortcuts</a>
+                <a href="entry_product.php">Entry Products</a>
             </li>
             <li>
-                <a href="#">Overview</a>
+                <a href="entry_lotto.php">Entry your stock </a>
             </li>
             <li>
-                <a href="#">Events</a>
+                <a href="products.php">Products </a>
             </li>
+            <li>
+                <a href="supplier_info.php">Supplier </a>
+            </li>
+
             <li class="active">
-                <a href="#">About</a>
+                <a href="report.php">Report</a>
             </li>
             <li>
-                <a href="#">Services</a>
-            </li>
-            <li>
-                <a href="#">Contact</a>
+                <a href="setting.php">Settings</a>
             </li>
         </ul>
     </div>
@@ -61,13 +82,13 @@
                         <li>
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="ti-panel"></i>
-        						<p>Stats</p>
+        						<p></p>
                             </a>
                         </li>
         				<li>
-                            <a href="#">
+                            <a href="logout.php">
         						<i class="ti-settings"></i>
-        						<p>Settings</p>
+        						<p>Logout</p>
                             </a>
                         </li>
                     </ul>
@@ -127,41 +148,57 @@
                          <table class="table table-invoice">
                             <thead>
                                <tr>
-                                  <th>TASK DESCRIPTION</th>
-                                  <th class="text-center" width="10%">RATE</th>
-                                  <th class="text-center" width="10%">HOURS</th>
-                                  <th class="text-right" width="20%">LINE TOTAL</th>
+                                 <th>Product Name</th>
+                                  <th>Product DESCRIPTION</th>
+                                  <th>Product Category</th>
+                                  <th>Room</th>       
+                                  <th class="text-center" width="10%">Under Stock</th>
+                                  <th class="text-center" width="10%">Sales Period</th>
+                                  <th class="text-right" width="20%">Cost Per Room</th>
+                                  <th class="text-right" width="20%">Date of sell</th>
                                </tr>
                             </thead>
-                            <tbody>
-                               <tr>
-                                  <td>
-                                     <span class="text-inverse">Website design &amp; development</span><br>
-                                     <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id sagittis arcu.</small>
-                                  </td>
-                                  <td class="text-center">$50.00</td>
-                                  <td class="text-center">50</td>
-                                  <td class="text-right">$2,500.00</td>
-                               </tr>
-                               <tr>
-                                  <td>
-                                     <span class="text-inverse">Branding</span><br>
-                                     <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id sagittis arcu.</small>
-                                  </td>
-                                  <td class="text-center">$50.00</td>
-                                  <td class="text-center">40</td>
-                                  <td class="text-right">$2,000.00</td>
-                               </tr>
-                               <tr>
-                                  <td>
-                                     <span class="text-inverse">Redesign Service</span><br>
-                                     <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id sagittis arcu.</small>
-                                  </td>
-                                  <td class="text-center">$50.00</td>
-                                  <td class="text-center">50</td>
-                                  <td class="text-right">$2,500.00</td>
-                               </tr>
-                            </tbody>
+
+                            <?php
+                                 if ($count_doc>0) 
+                                 {
+                                    $i=0;
+                                    $stock_object = array();
+                                    $room_object = array();
+                                    $report_stock = array();
+                                    $room_info = array();
+                                   while ($product_report=mysqli_fetch_assoc($report_object)) 
+                                   {
+                                      $get_name = $product_report['Product_Name'];
+                                      $sql_stock ='SELECT * FROM stock where Product_Name ='$get_name'';
+                                      $stock_object[$i] =mysqli_query($conn,$sql_stock) Or die("Failed to query " . mysqli_error($conn));
+                                      $report_stock[$i] = mysqli_fetch_assoc($stock_object[$i]);
+
+
+                                      $get_room = $product_report['room'];
+                                      $sql_room = 'SELECT * FROM room where roomID = '$get_room'';
+                                      $room_object[$i] = mysqli_query($conn,$sql_room) Or die("Failed to query " . mysqli_error($conn));
+                                      $room_info[$i] = mysqli_fetch_assoc($room_object[$i]);
+
+                                       echo '<tbody>
+                                       <tr>
+                                       <td class="text-center">' . $get_name . ' </td>
+                                          <td>
+                                             <span class="text-inverse">'. $product_report['pDescription'] . '</span><br>
+                                            
+                                          </td>
+                                          <td class="text-center">' . $report_stock[$i]['category'] . ' </td>
+                                          <td class="text-center">' . $report_stock[$i]['room'] . ' </td>
+                                          <td class="text-center">' . $report_stock[$i]['Under_Stock'] . ' </td>
+                                          <td class="text-center">' . $product_report['Sales_period'] . '</td>
+                                          <td class="text-right">' . $room_info[$i]['cost_per_room'] . '</td>
+                                          <td class="text-right">' . $product_report[$i]['dos'] . '</td>
+                                          
+                                       </tr>
+                                    </tbody>';
+                                   }
+                                 }
+                            ?>
                          </table>
                       </div>
                       <!-- end table-responsive -->
