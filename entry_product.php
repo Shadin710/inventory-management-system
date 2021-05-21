@@ -71,7 +71,7 @@
             <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
 <div class="card h-100">
 	<div class="card-body">
-    <form action="store.php" method='POST'>
+    <form action="entry_product_db.php" method='POST'>
 		<div class="row gutters">
             
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -95,22 +95,10 @@
                     </select>
 				</div>
 			</div>
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="eMail">Buying Price</label>
-					<input type="number" class="form-control" id="eMail" name="buying_price" placeholder="Buying price">
-				</div>
-			</div>
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="phone">Description</label>
-                    <textarea name="description" id="phone" class ="form-control" cols="1" rows="1" placeholder ="Product details"></textarea>
-				</div>
-			</div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
-					<label for="website">Under Stock</label>
-					<input type="number" class="form-control" name = "underStock" id="website" placeholder="Under Stock">
+					<label for="website">Sell</label>
+					<input type="number" class="form-control" name = "sell" id="website" placeholder="Under Stock">
 				</div>
 			</div>
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -125,17 +113,16 @@
 					<input type="text" class="form-control" name = "room_number" id="website" placeholder="Room number">
 				</div>
 			</div>
-
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
-					<label for="website">Lotto</label>
-					<input type="number" class="form-control" name="lotto" id="website" placeholder="Lotto">
+					<label for="website">Sales per period</label>
+					<input type="text" class="form-control" name = "room_number" id="website" placeholder="Sales per period">
 				</div>
 			</div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
-					<label for="website">Date of purchase</label>
-					<input type="date" class="form-control" id="website" name="dop" placeholder="Date of purchase">
+					<label for="website">Lotto</label>
+					<input type="number" class="form-control" name="lotto" id="website" placeholder="Lotto">
 				</div>
 			</div>
 
@@ -146,85 +133,9 @@
 				</div>
 			</div>
 
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="website">Expire Date</label>
-					<input type="date" class="form-control" id="website" name="Expire" placeholder="Expire Date">
-				</div>
-			</div>
 		</div>
-		<div class="row gutters">
-			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-				<h6 class="mt-3 mb-2 text-primary">Supplier Infomation</h6>
-			</div>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="Street">Company Name</label>
-					<input type="text" class="form-control" name="cName" id="Street" placeholder="Company Name">
-				</div>
-			</div>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="Street">Company Email</label>
-					<input type="text" class="form-control" id="Street" name="cEmail" placeholder="Company Email">
-				</div>
-			</div>
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="Street">Supplier Name</label>
-					<input type="text" class="form-control" id="Street" name="sNamne" placeholder="Supplier Name">
-				</div>
-			</div>
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="ciTy">Address</label>
-					<input type="text" class="form-control" id="ciTy" name="sAddress" placeholder="Supplier's Address">
-				</div>
-			</div>
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="fullName">Category</label>
-                    <select name="sCategory" class="form-control" id="fullName">
-                        <option value="">Choose a product</option>
-                        <option value="Courtesies">Courtesies</option>
-                        <option value="Frigobar">Frigobar</option>
-                        <option value="RoomService"> Room Service</option>
-                        <option value="Other">Other</option>
-                    </select>
-				</div>
-			</div>
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="zIp">Phone Number</label>
-					<input type="phone" class="form-control" name="sPhone" id="zIp" placeholder="Phone number">
-				</div>
-			</div>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="zIp">Mobile Number</label>
-					<input type="phone" class="form-control" name="sMobile" id="zIp" placeholder="Mobile number">
-				</div>
-			</div>
-            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="zIp">Email</label>
-					<input type="email" class="form-control" id="zIp" name= "sEmail" placeholder="Email">
-				</div>
-			</div>
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="fullName">Supplier Rating</label>
-                    <select name="ratings" class="form-control" id="fullName">
-                        <option value="">Give a rating</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3"> 3</option>
-                        <option value="4">4</option>
-						<option value="5">5</option>
-                    </select>
-				</div>
-			</div>
-		</div>
+
+
 		<div class="row gutters">
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<div class="text-right">
