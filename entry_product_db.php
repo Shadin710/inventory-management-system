@@ -9,26 +9,14 @@
     {
         $pNAME=$_POST['pName'];
         $category = $_POST['category'];
-        $buyPrice = $_POST['buying_price'];
         $sellPrice = $_POST['selling_price'];
-        $pDescription = $_POST['description'];
-        $uStock= $_POST['underStock'];
+        $sell= $_POST['sell'];
         $room_number =$_POST['room_number'];
         $lotto = $_POST['lotto'];
-        $dop = $_POST['dop'];
         $dos = $_POST['dos'];
         $expire = $_POST['Expire'];
 
-        $cName = $_POST['cName'];
-        $cEmail = $_POST['cEmail'];
-        $sName = $_POST['sName'];
-        $sAddress = $_POST['sAddress'];
-        $sCategory=  $_POST['sCategory'];
-        $sPhone = $_POST['sPhone'];
-        $sMobile = $_POST['sMobile'];
-        $sEmail = $_POST['sEmail'];
-        $ratings = $_POST['ratings']
-        $sql_article = "INSERT INTO articles(Product_Name,category,pDescription,Under_Stock,room,buy_price,sell_price,lotto,dop,dos,expire,supplier_name) VALUES ('$pNAME','$category','$pDescription','$uStock','$room_number','$buyPrice','$sellPrice','$lotto','$dop','$dos','$expire','$sName')";
+        $sql_article = "INSERT INTO articles(Product_Name,category,sold_product,room,sell_price,lotto,dos,expire) VALUES ('$pNAME','$category','$sell','$room_number','$sellPrice','$lotto','$dos','$expire')";
 
         if(!mysqli_query($conn,$sql_article))
         {
@@ -36,16 +24,20 @@
         }
         else
         {
-            $sql_supplier ="INSERT INTO supplier(cName,cEmail,sName,sAddress,sCategory,sEmail,sMobile,sPhone,ratings) VALUES ('$cName','$cEmail','$sName','$sAddress','$sCategory','$sEmail','$sMobile','$sPhone','$ratings')";
+            $get_stock  = 'SELECT * FROM stock';
+            $stock_object = mysqli_query($conn,$get_stock) Or die("Failed to query " . mysqli_error($conn));
+            $stock = mysqli_fetch_assoc($stock_object);
+            $uStock = $stock['Under_Stock']- $sell
+            $sql_stock_update = 'UPDATE stock SET Under_Stock='$uStock' WHERE Product_Name='$pNAME'';
 
-            if (!mysqli_query($conn,$sql_supplier)) 
-            {
-                die("Failed to insert data in supplier table" . mysqli_error($conn));
+            if (!mysqli_query($conn,$sql_stock_update)) {
+                die("Failed to update the data" . mysqli_error($conn))
             }
             else
             {
                 header("Location:homepage.php");
             }
+            
         }
     }
 
