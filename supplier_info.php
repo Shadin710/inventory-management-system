@@ -24,7 +24,7 @@
     <title>Sidebar left menu - Bootdey.com</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/supplier.css">
+    <link rel="stylesheet" href="css/supplier_info.css">
 </head>
 <body>
 
@@ -33,7 +33,7 @@
 <div id="wrapper" class="wrapper-content">
     <div id="sidebar-wrapper">
     <ul class="sidebar-nav">
-            <li class="sidebar-brand">
+    <li class="sidebar-brand">
                 <a href="#">
                    Welcome
                 </a>
@@ -45,19 +45,20 @@
                 <a href="entry_product.php">Entry Products</a>
             </li>
             <li>
-                <a href="supplier.php">Supplier </a>
+                <a href="entry_lotto.php">Entry your stock </a>
             </li>
             <li>
-                <a href="room.php">Rooms</a>
+                <a href="products.php">Products </a>
             </li>
+            <li>
+                <a href="supplier_info.php">Supplier </a>
+            </li>
+
             <li class="active">
                 <a href="report.php">Report</a>
             </li>
             <li>
-                <a href="logs.php">Logs</a>
-            </li>
-            <li>
-                <a href="logout.php">Logout</a>
+                <a href="setting.php">Settings</a>
             </li>
         </ul>
     </div>
