@@ -7,15 +7,36 @@
     include_once 'connection/db_connection.php';
     $sql_rooms = 'SELECT * FROM articles';
     $room_object = mysqli_query($conn,$sql_rooms) Or die("Failed to query " . mysqli_error($conn));
-    $rooms_sold = mysqli_fetch_assoc($room_object);
+    $rooms_sold = mysqli_num_rows($room_object);
+
+    $profit_sell=0;
+    while ($product = mysqli_fetch_assoc($room_object)) 
+    {
+        $profit_sell = $profit_sell+$product['sell_price'];
+    }
+    $sql_stock = 'SELECT * FROM stock';
+    $stock_object = mysqli_query($conn,$sql_stock) Or die("Failed to query " . mysqli_error($conn));
+    $profit_stock = 0;
+    $product_under_stock=0;
+    while ($product_stock = mysqli_fetch_assoc($stock_object)) 
+    {
+      $profit_stock = $profit_stock+$product_stock['buy_price'];
+      $product_under_stock = $product_under_stock +$product_stock['Under_Stock'];
+    }
+    $total_profit = $profit_sell-$product_stock;
 
     $sql_report = 'SELECT * FROM supplier';
     $report_object = mysqli_query($conn,$sql_report) Or die("Failed to query " . mysqli_error($conn));
     $report = mysqli_fetch_assoc($report_object);
 
-    $sql_warehouse =  'SELECT * FROM rooms';
-    $warehouse_object = mysqli_query($conn,$sql_warehouse) Or die("Failed to query " . mysqli_error($conn));
-    $warehouse = mysqli_fetch_assoc($warehouse_object);
+    //$sql_warehouse =  'SELECT * FROM rooms';
+    //$warehouse_object = mysqli_query($conn,$sql_warehouse) Or die("Failed to query " . mysqli_error($conn));
+    //$warehouse = mysqli_fetch_assoc($warehouse_object);
+
+    $sql_low_stock='SELECT * FROM stock ORDER BY Under_Stock ASC';
+    $low_stock_object = mysqli_query($conn,$sql_low_stock) Or die("Failed to query " . mysqli_error($conn));
+    $low_stock = mysqli_fetch_assoc($low_stock_object);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,30 +58,32 @@
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
             <li class="sidebar-brand">
+            <li class="sidebar-brand">
                 <a href="#">
-                    Welcome <?php echo " " . $_SESSION['username']; ?>
+                   Welcome
                 </a>
             </li>
             <li>
                 <a href="homepage.php">Homepage</a>
             </li>
             <li>
-                <a href="entry_product.php">Entry</a>
+                <a href="entry_product.php">Entry Products</a>
             </li>
             <li>
-                <a href="products.php">Products</a>
+                <a href="entry_lotto.php">Entry your stock </a>
             </li>
             <li>
-                <a href="supplier.php">Supplier</a>
+                <a href="products.php">Products </a>
             </li>
+            <li>
+                <a href="supplier_info.php">Supplier </a>
+            </li>
+
             <li class="active">
+                <a href="report.php">Report</a>
+            </li>
+            <li>
                 <a href="setting.php">Settings</a>
-            </li>
-            <li>
-                <a href="services.php">Services</a>
-            </li>
-            <li>
-                <a href="logout.php">Logout</a>
             </li>
         </ul>
     </div>
@@ -83,9 +106,9 @@
                             </a>
                         </li>
         				<li>
-                            <a href="setting.php">
+                            <a href="logout.php">
         						<i class="ti-settings"></i>
-        						<p>Settings</p>
+        						<p>Logout</p>
                             </a>
                         </li>
                     </ul>
@@ -98,10 +121,10 @@
         <div class="col-md-3 col-sm-6 col-xs-12">
             <div class="panel panel-dark panel-colorful">
                 <div class="panel-body text-center">
-                	<p class="text-uppercase mar-btm text-sm">Visit Today</p>
+                	<p class="text-uppercase mar-btm text-sm">Rooms Sold Today</p>
                 	<i class="fa fa-users fa-5x"></i>
                 	<hr>
-                	<p class="h2 text-thin">254,487</p>
+                	<p class="h2 text-thin"><?php echo $rooms_sold;?></p>
                 	<small><span class="text-semibold">7%</span> Higher than yesterday</small>
                 </div>
             </div>
@@ -109,21 +132,21 @@
         <div class="col-md-3 col-sm-6 col-xs-12">
         	<div class="panel panel-danger panel-colorful">
         		<div class="panel-body text-center">
-        			<p class="text-uppercase mar-btm text-sm">Comments</p>
+        			<p class="text-uppercase mar-btm text-sm">Lowest Stock</p>
         			<i class="fa fa-comment fa-5x"></i>
         			<hr>
-        			<p class="h2 text-thin">873</p>
-        			<small><span class="text-semibold"><i class="fa fa-unlock-alt fa-fw"></i> 154</span> Unapproved comments</small>
+        			<p class="h2 text-thin"><?php echo $low_stock['category'];?></p>
+        			<small><span class="text-semibold"><i class="fa fa-unlock-alt fa-fw"></i></span></small>
         		</div>
         	</div>
         </div>
         <div class="col-md-3 col-sm-6 col-xs-12">
         	<div class="panel panel-primary panel-colorful">
         		<div class="panel-body text-center">
-        			<p class="text-uppercase mar-btm text-sm">New Order</p>
+        			<p class="text-uppercase mar-btm text-sm">Total Product</p>
         			<i class="fa fa-shopping-cart fa-5x"></i>
         			<hr>
-        			<p class="h2 text-thin">2,423</p>
+        			<p class="h2 text-thin"><?php echo $product_under_stock;?></p>
         			<small><span class="text-semibold"><i class="fa fa-shopping-cart fa-fw"></i> 954</span> Sales in this month</small>
         		</div>
         	</div>
@@ -131,11 +154,11 @@
         <div class="col-md-3 col-sm-6 col-xs-12">
         	<div class="panel panel-info panel-colorful">
         		<div class="panel-body text-center">
-        			<p class="text-uppercase mar-btm text-sm">Earning</p>
-        			<i class="fa fa-dollar fa-5x"></i>
+        			<p class="text-uppercase mar-btm text-sm">Earnings</p>
+        			<i class="fa fa-euro fa-5x"></i>
         			<hr>
-        			<p class="h2 text-thin">7,428</p>
-        			<small><span class="text-semibold"><i class="fa fa-dollar fa-fw"></i> 22,675</span> Total Earning</small>
+        			<p class="h2 text-thin"><?php echo $total_profit; ?></p>
+        			<small><span class="text-semibold"><i class="fa fa-euro fa-fw"></i> 22,675</span> Total Earning</small>
         		</div>
         	</div>
         </div>        
