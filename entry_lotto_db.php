@@ -4,7 +4,7 @@
     {
         header("Location:index.php");
     }
-    include_once 'connection/db_connection.php'
+    include_once 'connection/db_connection.php';
     if ($_SERVER['REQUEST_METHOD']=='POST')
     {
         $pNAME=$_POST['pName'];
@@ -24,10 +24,10 @@
         $sPhone = $_POST['sPhone'];
         $sMobile = $_POST['sMobile'];
         $sEmail = $_POST['sEmail'];
-        $ratings = $_POST['ratings']
+        $ratings = $_POST['ratings'];
         $sql_stock = "INSERT INTO stock(Product_Name,category,pDescription,Under_Stock,buy_price,lotto,dop,expire,supplier_name) VALUES ('$pNAME','$category','$pDescription','$uStock','$buyPrice','$lotto','$dop','$expire','$sName')";
-
-        if(!mysqli_query($conn,$sql_article))
+        
+        if(!mysqli_query($conn,$sql_stock))
         {
             die("Failed to insert the data in stock table" . mysqli_error($conn));
         }
