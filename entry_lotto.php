@@ -1,5 +1,9 @@
 <?php
     session_start();
+	if (empty($_SESSION['username'])) 
+	{
+		header("Location:index.php");
+	}
 ?>
 
 
@@ -33,7 +37,7 @@
                 <a href="entry_product.php">Entry Products</a>
             </li>
             <li>
-                <a href="entry_lotto.php">Entry your stock </a>
+                <a href="entry_lotto.php">Entry Stocks </a>
             </li>
             <li>
                 <a href="products.php">Products </a>
@@ -44,9 +48,6 @@
 
             <li class="active">
                 <a href="report.php">Report</a>
-            </li>
-            <li>
-                <a href="setting.php">Settings</a>
             </li>
         </ul>
     </div>
@@ -62,9 +63,9 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
         				<li>
-                            <a href="setting.php">
+                            <a href="logout.php">
         						<i class="ti-settings"></i>
-        						<p>Settings</p>
+        						<p>Logout</p>
                             </a>
                         </li>
                     </ul>
@@ -160,7 +161,7 @@
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
 					<label for="Street">Supplier Name</label>
-					<input type="text" class="form-control" id="Street" name="sNamne" placeholder="Supplier Name">
+					<input type="text" class="form-control" id="Street" name="sName" placeholder="Supplier Name">
 				</div>
 			</div>
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -199,26 +200,13 @@
 					<input type="email" class="form-control" id="zIp" name= "sEmail" placeholder="Email">
 				</div>
 			</div>
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-				<div class="form-group">
-					<label for="fullName">Supplier Rating</label>
-                    <select name="ratings" class="form-control" id="fullName">
-                        <option value="">Give a rating</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-						<option value="5">5</option>
-                    </select>
-				</div>
-			</div>
 		</div>
 		<div class="row gutters">
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<div class="text-right">
-					<button type="button" id="submit" name="submit" class="btn btn-primary">Submit</button>
+					<input type="submit" id="submit" name="submit" class="btn btn-primary" value ='SUBMIT'>
                     </form>
-                    <button type="button" id="submit" name="submit" class="btn btn-secondary">Cancel</button>
+					<a href="homepage.php"><button type="button" id="submit" name="submit" class="btn btn-secondary">Cancel</button></a>
 				</div>
 
 			</div>
