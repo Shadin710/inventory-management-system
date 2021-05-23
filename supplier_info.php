@@ -21,7 +21,7 @@
     <meta charset="utf-8">
     <!--  This file has been downloaded from bootdey.com    @bootdey on twitter -->
     <!--  All snippets are MIT license http://bootdey.com/license -->
-    <title>Sidebar left menu - Bootdey.com</title>
+    <title>Supplier</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/supplier_info.css">
@@ -45,7 +45,7 @@
                 <a href="entry_product.php">Entry Products</a>
             </li>
             <li>
-                <a href="entry_lotto.php">Entry your stock </a>
+                <a href="entry_lotto.php">Entry Stocks </a>
             </li>
             <li>
                 <a href="products.php">Products </a>
@@ -56,9 +56,6 @@
 
             <li class="active">
                 <a href="report.php">Report</a>
-            </li>
-            <li>
-                <a href="setting.php">Settings</a>
             </li>
         </ul>
     </div>
@@ -74,9 +71,9 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
         				<li>
-                            <a href="setting.php">
+                            <a href="logout.php">
         						<i class="ti-settings"></i>
-        						<p>Settings</p>
+        						<p>Logout</p>
                             </a>
                         </li>
                     </ul>
