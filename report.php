@@ -12,7 +12,8 @@
    $report_object = mysqli_query($conn,$sql_report) Or die("Failed to query " . mysqli_error($conn));
    $count_doc = mysqli_num_rows($report_object);
 
-  
+  $get_name='';
+  $get_room='';
 
   
 
@@ -39,7 +40,6 @@
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
         <li class="sidebar-brand">
-            <li class="sidebar-brand">
                 <a href="#">
                    Welcome
                 </a>
@@ -51,7 +51,7 @@
                 <a href="entry_product.php">Entry Products</a>
             </li>
             <li>
-                <a href="entry_lotto.php">Entry your stock </a>
+                <a href="entry_lotto.php">Entry Stocks </a>
             </li>
             <li>
                 <a href="products.php">Products </a>
@@ -63,9 +63,7 @@
             <li class="active">
                 <a href="report.php">Report</a>
             </li>
-            <li>
-                <a href="setting.php">Settings</a>
-            </li>
+
         </ul>
     </div>
 
@@ -103,43 +101,13 @@
                    <!-- begin invoice-company -->
                    <div class="invoice-company text-inverse f-w-600">
                       <span class="pull-right hidden-print">
-                      <a href="javascript:;" class="btn btn-sm btn-white m-b-10 p-l-5"><i class="fa fa-file t-plus-1 text-danger fa-fw fa-lg"></i> Export as PDF</a>
+                     
                       <a href="javascript:;" onclick="window.print()" class="btn btn-sm btn-white m-b-10 p-l-5"><i class="fa fa-print t-plus-1 fa-fw fa-lg"></i> Print</a>
                       </span>
-                      Company Name, Inc
+                      Warehouse
                    </div>
                    <!-- end invoice-company -->
                    <!-- begin invoice-header -->
-                   <div class="invoice-header">
-                      <div class="invoice-from">
-                         <small>from</small>
-                         <address class="m-t-5 m-b-5">
-                            <strong class="text-inverse">Twitter, Inc.</strong><br>
-                            Street Address<br>
-                            City, Zip Code<br>
-                            Phone: (123) 456-7890<br>
-                            Fax: (123) 456-7890
-                         </address>
-                      </div>
-                      <div class="invoice-to">
-                         <small>to</small>
-                         <address class="m-t-5 m-b-5">
-                            <strong class="text-inverse">Company Name</strong><br>
-                            Street Address<br>
-                            City, Zip Code<br>
-                            Phone: (123) 456-7890<br>
-                            Fax: (123) 456-7890
-                         </address>
-                      </div>
-                      <div class="invoice-date">
-                         <small>Invoice / July period</small>
-                         <div class="date text-inverse m-t-5">August 3,2012</div>
-                         <div class="invoice-detail">
-                            #0000123DSS<br>
-                            Services Product
-                         </div>
-                      </div>
-                   </div>
                    <!-- end invoice-header -->
                    <!-- begin invoice-content -->
                    <div class="invoice-content">
@@ -149,13 +117,13 @@
                             <thead>
                                <tr>
                                  <th>Product Name</th>
-                                  <th>Product DESCRIPTION</th>
+                                  <th>Description</th>
                                   <th>Product Category</th>
                                   <th>Room</th>       
-                                  <th class="text-center" width="10%">Under Stock</th>
-                                  <th class="text-center" width="10%">Sales Period</th>
-                                  <th class="text-right" width="20%">Cost Per Room</th>
-                                  <th class="text-right" width="20%">Date of sell</th>
+                                  <th class="text-center" >Under Stock</th>
+                                  <th class="text-center" >Sales Period</th>
+                                  <th class="text-right" >Cost Per Room</th>
+                                  <th class="text-right" >Date of sell</th>
                                </tr>
                             </thead>
 
@@ -170,13 +138,13 @@
                                    while ($product_report=mysqli_fetch_assoc($report_object)) 
                                    {
                                       $get_name = $product_report['Product_Name'];
-                                      $sql_stock ='SELECT * FROM stock where Product_Name ='$get_name'';
+                                      $sql_stock ="SELECT * FROM stock where Product_Name ='$get_name'";
                                       $stock_object[$i] =mysqli_query($conn,$sql_stock) Or die("Failed to query " . mysqli_error($conn));
                                       $report_stock[$i] = mysqli_fetch_assoc($stock_object[$i]);
 
 
                                       $get_room = $product_report['room'];
-                                      $sql_room = 'SELECT * FROM room where roomID = '$get_room'';
+                                      $sql_room = "SELECT * FROM room where room_id = '$get_room'";
                                       $room_object[$i] = mysqli_query($conn,$sql_room) Or die("Failed to query " . mysqli_error($conn));
                                       $room_info[$i] = mysqli_fetch_assoc($room_object[$i]);
 
@@ -184,18 +152,19 @@
                                        <tr>
                                        <td class="text-center">' . $get_name . ' </td>
                                           <td>
-                                             <span class="text-inverse">'. $product_report['pDescription'] . '</span><br>
+                                             <span class="text-inverse">'. $report_stock[$i]['pDescription'] . '</span><br>
                                             
                                           </td>
                                           <td class="text-center">' . $report_stock[$i]['category'] . ' </td>
-                                          <td class="text-center">' . $report_stock[$i]['room'] . ' </td>
+                                          <td class="text-center">' . $get_room . ' </td>
                                           <td class="text-center">' . $report_stock[$i]['Under_Stock'] . ' </td>
-                                          <td class="text-center">' . $product_report['Sales_period'] . '</td>
+                                          <td class="text-center">' . $product_report['Sales_Period'] . '</td>
                                           <td class="text-right">' . $room_info[$i]['cost_per_room'] . '</td>
-                                          <td class="text-right">' . $product_report[$i]['dos'] . '</td>
+                                          <td class="text-right">' . $product_report['dos'] . '</td>
                                           
                                        </tr>
                                     </tbody>';
+                                    $i++;
                                    }
                                  }
                             ?>
@@ -207,42 +176,29 @@
                          <div class="invoice-price-left">
                             <div class="invoice-price-row">
                                <div class="sub-price">
-                                  <small>SUBTOTAL</small>
-                                  <span class="text-inverse">$4,500.00</span>
+                                  <small>Total Selling price</small>
+                                  <span class="text-inverse">€<?php echo $_SESSION['profit_sell'];?></span>
                                </div>
                                <div class="sub-price">
-                                  <i class="fa fa-plus text-muted"></i>
+                                  <i class="fa fa-minus text-muted"></i>
                                </div>
                                <div class="sub-price">
-                                  <small>PAYPAL FEE (5.4%)</small>
-                                  <span class="text-inverse">$108.00</span>
+                                  <small>Total Buying price</small>
+                                  <span class="text-inverse">€<?php echo $_SESSION['profit_stock'];?></span>
                                </div>
                             </div>
                          </div>
                          <div class="invoice-price-right">
-                            <small>TOTAL</small> <span class="f-w-600">$4508.00</span>
+                            <small>TOTAL</small> <span class="f-w-600">€ <?php echo $_SESSION['profit'];?></span>
                          </div>
                       </div>
                       <!-- end invoice-price -->
                    </div>
                    <!-- end invoice-content -->
                    <!-- begin invoice-note -->
-                   <div class="invoice-note">
-                      * Make all cheques payable to [Your Company Name]<br>
-                      * Payment is due within 30 days<br>
-                      * If you have any questions concerning this invoice, contact  [Name, Phone Number, Email]
-                   </div>
                    <!-- end invoice-note -->
                    <!-- begin invoice-footer -->
                    <div class="invoice-footer">
-                      <p class="text-center m-b-5 f-w-600">
-                         THANK YOU FOR YOUR BUSINESS
-                      </p>
-                      <p class="text-center">
-                         <span class="m-r-10"><i class="fa fa-fw fa-lg fa-globe"></i> matiasgallipoli.com</span>
-                         <span class="m-r-10"><i class="fa fa-fw fa-lg fa-phone-volume"></i> T:016-18192302</span>
-                         <span class="m-r-10"><i class="fa fa-fw fa-lg fa-envelope"></i> rtiemps@gmail.com</span>
-                      </p>
                    </div>
                    <!-- end invoice-footer -->
                 </div>
