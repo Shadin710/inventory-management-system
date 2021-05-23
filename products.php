@@ -10,10 +10,14 @@
     $sql_product_stock = 'SELECT * FROM stock';
     $product_object_stock= mysqli_query($conn,$sql_product_stock) Or die("Falied to query " . mysqli_error($conn));
     $product_count = mysqli_num_rows($product_object_stock);
- 
-   
 
-    $null ='   ';
+    $sql_check = "SELECT * FROM articles";
+    $object_check = mysqli_query($conn,$sql_check) Or die("Failed to query " . mysqli_error($conn));
+    $article_count = mysqli_num_rows($object_check);
+ 
+   $get_name='';
+
+    $null ='';
 ?>
 
 
@@ -24,7 +28,7 @@
     <title>Products</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/report.css">
+    <link rel="stylesheet" href="css/products.css">
 </head>
 <body>
 
@@ -45,7 +49,7 @@
                 <a href="entry_product.php">Entry Products</a>
             </li>
             <li>
-                <a href="entry_lotto.php">Entry your stock </a>
+                <a href="entry_lotto.php">Entry Stocks </a>
             </li>
             <li>
                 <a href="products.php">Products </a>
@@ -56,9 +60,6 @@
 
             <li class="active">
                 <a href="report.php">Report</a>
-            </li>
-            <li>
-                <a href="setting.php">Settings</a>
             </li>
         </ul>
     </div>
@@ -103,31 +104,59 @@
   </tr>
   <?php
   // need to fix it
-    if ($product_count>0) 
+    if ($product_count>0 && $article_count>0) 
     {
         $i=0;
         $product_sell=array();
+        $product_sale=array();
         while ($product_get=mysqli_fetch_assoc($product_object_stock))
          {  
              
             $get_name = $product_get['Product_Name'];
-            $sql_product_sell = 'SELECT * FROM articles WHERE Product_Name='$get_name'';
-            $product_sell[$i] = mysqli_query($conn,$sql_product_sell) Or die("Failed to query " . mysqli_error($conn));
-            $profit = $product_sell[$i]['sell_price'] - $product_get['buy_price'];
-            echo '<tr>
-            <td>' . $product_get['Product_Name'] . '</td>
-            <td>' . $product_get['category'] . '</td>
-            <td>' . $product_get['supplier_name'] . '</td>
-            <td>' . $product_sell[$i]['room'] . '</td>
-            <td>' . $product_get['Under_Stock'] . '</td>
-            <td>' . $product_get['buy_price'] . '</td>
-            <td>' . $product_sell['sell_price'] . '</td>
-            <td>' . $profit . '</td>
-            <td>' . $product_sell['lotto'] . '</td>
-            <td>' . $product_get['dop'] . '</td>
-            <td>' . $product_sell['dos'] . '</td>
-            <td>' . $product_sell['expire'] . '</td>
-          </tr>';
+
+            $sql_product_sell = "SELECT * FROM articles WHERE Product_Name='$get_name'";
+
+            $product_sale[$i] = mysqli_query($conn,$sql_product_sell) Or die("Failed to query " . mysqli_error($conn));
+
+            $product_sell[$i] = mysqli_fetch_assoc($product_sale[$i]);
+
+            if (isset($product_sell[$i])) {
+                $profit = $product_sell[$i]['sell_price'] - $product_get['buy_price'];
+                echo '<tr>
+                <td>' . $product_get['Product_Name'] . '</td>
+                <td>' . $product_get['category'] . '</td>
+                <td>' . $product_get['supplier_name'] . '</td>
+                <td>' . $product_sell[$i]['room'] . '</td>
+                <td>' . $product_get['Under_Stock'] . '</td>
+                <td>' . $product_get['buy_price'] . '</td>
+                <td>' . $product_sell[$i]['sell_price'] . '</td>
+                <td>' . $profit . '</td>
+                <td>' . $product_sell[$i]['lotto'] . '</td>
+                <td>' . $product_get['dop'] . '</td>
+                <td>' . $product_sell[$i]['dos'] . '</td>
+                <td>' . $product_sell[$i]['expire'] . '</td>
+              </tr>';
+            }
+            else
+            {
+                $product_not ='Not Selled';
+                $profit = 0;
+               
+                echo '<tr>
+                <td>' . $product_get['Product_Name'] . '</td>
+                <td>' . $product_get['category'] . '</td>
+                <td>' . $product_get['supplier_name'] . '</td>
+                <td>' . $product_not . '</td>
+                <td>' . $product_get['Under_Stock'] . '</td>
+                <td>' . $product_get['buy_price'] . '</td>
+                <td>' . $product_not . '</td>
+                <td>' .  $profit . '</td>
+                <td>' . $product_not . '</td>
+                <td>' . $product_get['dop'] . '</td>
+                <td>' . $product_not . '</td>
+                <td>' . $product_not . '</td>
+              </tr>';
+            }
           $i++;
          }    
     }
