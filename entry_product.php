@@ -1,10 +1,21 @@
+<?php
+    session_start();
+    if (empty($_SESSION['username'])) 
+    {
+        header("Location:index.php");
+    }
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <!--  This file has been downloaded from bootdey.com    @bootdey on twitter -->
     <!--  All snippets are MIT license http://bootdey.com/license -->
-    <title>Sidebar left menu - Bootdey.com</title>
+    <title>Entry Products</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/entry.css">
@@ -28,19 +39,16 @@
                 <a href="entry_product.php">Entry Products</a>
             </li>
             <li>
-                <a href="supplier.php">Supplier </a>
+                <a href="entry_lotto.php">Entry Stocks </a>
             </li>
             <li>
-                <a href="room.php">Rooms</a>
+                <a href="products.php">Products</a>
             </li>
             <li class="active">
+                <a href="supplier_info.php">Supplier</a>
+            </li>
+            <li>
                 <a href="report.php">Report</a>
-            </li>
-            <li>
-                <a href="logs.php">Logs</a>
-            </li>
-            <li>
-                <a href="logout.php">Logout</a>
             </li>
         </ul>
     </div>
@@ -55,10 +63,16 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
-        				<li>
-                            <a href="setting.php">
+                        <li>
+                            <a href="warning_sign.php">
         						<i class="ti-settings"></i>
-        						<p>Settings</p>
+        						<p>Clear todays Product</p>
+                            </a>
+                        </li>
+        				<li>
+                            <a href="logout.php">
+        						<i class="ti-settings"></i>
+        						<p>Logout</p>
                             </a>
                         </li>
                     </ul>
@@ -97,8 +111,8 @@
 			</div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
-					<label for="website">Sell</label>
-					<input type="number" class="form-control" name = "sell" id="website" placeholder="Under Stock">
+					<label for="website">Number of product</label>
+					<input type="number" class="form-control" name = "sell" id="website" placeholder="Number of Product">
 				</div>
 			</div>
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -116,7 +130,13 @@
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
 					<label for="website">Sales per period</label>
-					<input type="text" class="form-control" name = "room_number" id="website" placeholder="Sales per period">
+					<input type="text" class="form-control" name = "spp" id="website" placeholder="Sales per period">
+				</div>
+			</div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="form-group">
+					<label for="website">Cost per Room</label>
+					<input type="text" class="form-control" name = "cpr" id="website" placeholder="Cost Per Room">
 				</div>
 			</div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -132,16 +152,20 @@
 					<input type="date" class="form-control" id="website" name="dos" placeholder="Date of Sell">
 				</div>
 			</div>
-
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="form-group">
+					<label for="website">Expire Date</label>
+					<input type="date" class="form-control" id="website" name="Expire" placeholder="Expire Date">
+				</div>
+			</div>
 		</div>
 
 
 		<div class="row gutters">
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<div class="text-right">
-					<button type="button" id="submit" name="submit" class="btn btn-primary">Submit</button>
-                    </form>
-                    <button type="button" id="submit" name="submit" class="btn btn-secondary">Cancel</button>
+                <input type="submit" id="submit" name="submit" class="btn btn-primary" value ='SUBMIT'>
+                    <a href="homepage.php"><button type="button" id="submit" name="submit" class="btn btn-secondary">Cancel</button></a>
 				</div>
 
 			</div>
