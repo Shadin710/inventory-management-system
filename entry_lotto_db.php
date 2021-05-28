@@ -25,6 +25,7 @@
         $sMobile = $_POST['sMobile'];
         $sEmail = $_POST['sEmail'];
         $ratings = $_POST['ratings'];
+        $city_name = $_POST['city'];
         $sql_stock = "INSERT INTO stock(Product_Name,category,pDescription,Under_Stock,buy_price,lotto,dop,expire,supplier_name) VALUES ('$pNAME','$category','$pDescription','$uStock','$buyPrice','$lotto','$dop','$expire','$sName')";
         
         if(!mysqli_query($conn,$sql_stock))
@@ -41,7 +42,15 @@
             }
             else
             {
-                header("Location:homepage.php");
+                $sql_city = "INSERT INTO city(city_name,Product_Name,city_lotto,category) VALUES ('$city_name','$pNAME','$lotto','$category')";
+                if (!mysqli_query($conn,$sql_city)) 
+                {
+                    die("Failed to insert into city" . mysqli_error($conn));
+                }
+                else
+                {
+                    header("Location:homepage.php");
+                }
             }
         }
     }
