@@ -92,6 +92,12 @@
 			</div>
 			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 				<div class="form-group">
+					<label for="eMail">City</label>
+					<input type="text" class="form-control" id="eMail" name="city" placeholder="Product Name">
+				</div>
+			</div>
+			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+				<div class="form-group">
 					<label for="fullName">Category</label>
                     <select name="category" class="form-control" id="fullName">
                         <option value="">Choose a product</option>
