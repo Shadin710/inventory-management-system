@@ -7,14 +7,16 @@
     }
     include_once 'connection/db_connection.php';
 
-    $sql_product_stock = 'SELECT * FROM stock';
+    $sql_product_stock = 'SELECT * FROM stock ORDER BY dop DESC';
     $product_object_stock= mysqli_query($conn,$sql_product_stock) Or die("Falied to query " . mysqli_error($conn));
     $product_count = mysqli_num_rows($product_object_stock);
 
-    $sql_check = "SELECT * FROM articles";
+    $sql_check = "SELECT * FROM articles ORDER BY dos ASC";
     $object_check = mysqli_query($conn,$sql_check) Or die("Failed to query " . mysqli_error($conn));
     $article_count = mysqli_num_rows($object_check);
- 
+    
+    
+
    $get_name='';
 
     $null ='';
@@ -90,10 +92,12 @@
             <table id="customers">
   <tr>
     <th>Product Name</th>
+    <th>City</th>
     <th>Category</th>
     <th>Supplier Name</th>
     <th>Room</th>
     <th>Under Stock</th>
+    <th>City Lotto</th>
     <th>Buy Price</th>
     <th>Sell Price</th>
     <th>Profit</th>
@@ -109,25 +113,38 @@
         $i=0;
         $product_sell=array();
         $product_sale=array();
+        $city_array = array();
+        $sql_city_object = array();
         while ($product_get=mysqli_fetch_assoc($product_object_stock))
          {  
              
             $get_name = $product_get['Product_Name'];
 
+            //get city info
+            $sql_city = "SELECT * FROM city  WHERE Product_Name = '$get_name'";
+            $sql_city_object[$i]= mysqli_query($conn,$sql_city) Or die("Failed to query " . mysqli_error($conn));
+            $city_array[$i] = mysqli_fetch_assoc($sql_city_object[$i]);
+
+
+            // product info
             $sql_product_sell = "SELECT * FROM articles WHERE Product_Name='$get_name'";
 
             $product_sale[$i] = mysqli_query($conn,$sql_product_sell) Or die("Failed to query " . mysqli_error($conn));
 
             $product_sell[$i] = mysqli_fetch_assoc($product_sale[$i]);
 
+
+
             if (isset($product_sell[$i])) {
                 $profit = $product_sell[$i]['sell_price'] - $product_get['buy_price'];
                 echo '<tr>
                 <td>' . $product_get['Product_Name'] . '</td>
+                <td>' . $city_array[$i]['city_name'] . '</td>
                 <td>' . $product_get['category'] . '</td>
                 <td>' . $product_get['supplier_name'] . '</td>
                 <td>' . $product_sell[$i]['room'] . '</td>
-                <td>' . $product_get['Under_Stock'] . '</td>
+                <td  style="color:red;"><b>' . $product_get['Under_Stock'] . '</b></td>
+                <td>' . $city_array[$i]['city_lotto'] . '</td>
                 <td>' . $product_get['buy_price'] . '</td>
                 <td>' . $product_sell[$i]['sell_price'] . '</td>
                 <td>' . $profit . '</td>
@@ -140,14 +157,18 @@
             else
             {
                 $product_not ='Not Selled';
+                $city = 'No product sold today';
+                $lotto  ='EVERY product is in the lotto';
                 $profit = 0;
                
                 echo '<tr>
                 <td>' . $product_get['Product_Name'] . '</td>
+                <td>' . $city . '</td>
                 <td>' . $product_get['category'] . '</td>
                 <td>' . $product_get['supplier_name'] . '</td>
                 <td>' . $product_not . '</td>
                 <td>' . $product_get['Under_Stock'] . '</td>
+                <td>' . $lotto . '</td>
                 <td>' . $product_get['buy_price'] . '</td>
                 <td>' . $product_not . '</td>
                 <td>' .  $profit . '</td>
