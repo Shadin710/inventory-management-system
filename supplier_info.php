@@ -7,7 +7,7 @@
     }
     include_once 'connection/db_connection.php';
 
-    $sql_supplier = 'SELECT * FROM supplier';
+    $sql_supplier = 'SELECT * FROM supplier ORDER BY sName ASC';
     $supplier_object= mysqli_query($conn,$sql_supplier) Or die("Falied to query " . mysqli_error($conn));
     $supplier_count = mysqli_num_rows($supplier_object);
 
@@ -93,7 +93,7 @@
     <th>Supplier Email</th>
     <th>Supplier Mobile</th>
     <th>Supplier Phone</th>
-    <th>Supplier rating</th>
+    
   </tr>
   <?php
     if ($supplier_count>0) 
@@ -110,7 +110,7 @@
             <td>' . $supplier['sEmail'] . '</td>
             <td>' . $supplier['sMobile'] . '</td>
             <td>' . $supplier['sPhone'] . '</td>
-            <td>' . $supplier['ratings'] . '</td>
+          
           </tr>';
          }    
     }
