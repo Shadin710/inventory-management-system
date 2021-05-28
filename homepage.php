@@ -158,7 +158,7 @@
         			<i class="fa fa-shopping-cart fa-5x"></i>
         			<hr>
         			<p class="h2 text-thin"><?php echo $product_under_stock;?></p>
-        			<small><span class="text-semibold"><i class="fa fa-shopping-cart fa-fw"></i> <?php echo $product_under_stock;?></span> Sales in this month</small>
+        			<small><span class="text-semibold"><i class="fa fa-shopping-cart fa-fw"></i> <?php echo $product_under_stock;?></span> Product under stock</small>
         		</div>
         	</div>
         </div>
