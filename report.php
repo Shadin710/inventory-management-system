@@ -8,7 +8,7 @@
 
    
    include_once 'connection/db_connection.php';
-   $sql_report = 'SELECT * FROM articles';
+   $sql_report = 'SELECT * FROM articles ORDER by dos ASC';
    $report_object = mysqli_query($conn,$sql_report) Or die("Failed to query " . mysqli_error($conn));
    $count_doc = mysqli_num_rows($report_object);
 
@@ -116,14 +116,16 @@
                          <table class="table table-invoice">
                             <thead>
                                <tr>
-                                 <th>Product Name</th>
-                                  <th>Description</th>
-                                  <th>Product Category</th>
-                                  <th>Room</th>       
+                                 <th class="text-center">Product Name</th>
+                                  <th class="text-center">Description</th>
+                                  <th class="text-center">City Name</th>
+                                  <th class="text-center">Product Category</th>
+                                  <th class="text-center">City Lotto</th>
+                                  <th class="text-center">Room</th>       
                                   <th class="text-center" >Under Stock</th>
                                   <th class="text-center" >Sales Period</th>
-                                  <th class="text-right" >Cost Per Room</th>
-                                  <th class="text-right" >Date of sell</th>
+                                  <th class="text-center" >Cost Per Room</th>
+                                  <th class="text-center" >Date of sell</th>
                                </tr>
                             </thead>
 
@@ -135,6 +137,8 @@
                                     $room_object = array();
                                     $report_stock = array();
                                     $room_info = array();
+                                    $city_object = array();
+                                    $city_array = array();
                                    while ($product_report=mysqli_fetch_assoc($report_object)) 
                                    {
                                       $get_name = $product_report['Product_Name'];
@@ -142,7 +146,12 @@
                                       $stock_object[$i] =mysqli_query($conn,$sql_stock) Or die("Failed to query " . mysqli_error($conn));
                                       $report_stock[$i] = mysqli_fetch_assoc($stock_object[$i]);
 
-
+                                      //City
+                                      $sql_city= "SELECT * FROM city WHERE Product_Name = '$get_name'";
+                                      $city_object[$i] = mysqli_query($conn,$sql_city) Or die("Failed to search city " . mysqli_error($conn));
+                                      $city_array[$i] = mysqli_fetch_assoc($city_object[$i]);
+                                      //room
+                            
                                       $get_room = $product_report['room'];
                                       $sql_room = "SELECT * FROM room where room_id = '$get_room'";
                                       $room_object[$i] = mysqli_query($conn,$sql_room) Or die("Failed to query " . mysqli_error($conn));
@@ -151,16 +160,18 @@
                                        echo '<tbody>
                                        <tr>
                                        <td class="text-center">' . $get_name . ' </td>
-                                          <td>
-                                             <span class="text-inverse">'. $report_stock[$i]['pDescription'] . '</span><br>
+                                          <td class="text-center">
+                                            ' . $report_stock[$i]['pDescription'] . '
                                             
                                           </td>
+                                          <td class="text-center">' . $city_array[$i]['city_name'] . ' </td>
                                           <td class="text-center">' . $report_stock[$i]['category'] . ' </td>
+                                          <td class="text-center">' . $city_array[$i]['city_lotto'] . ' </td>
                                           <td class="text-center">' . $get_room . ' </td>
-                                          <td class="text-center">' . $report_stock[$i]['Under_Stock'] . ' </td>
+                                          <td class="text-center"  style="color:red;"><b>' . $report_stock[$i]['Under_Stock'] . '</b></td>
                                           <td class="text-center">' . $product_report['Sales_Period'] . '</td>
-                                          <td class="text-right">' . $room_info[$i]['cost_per_room'] . '</td>
-                                          <td class="text-right">' . $product_report['dos'] . '</td>
+                                          <td class="text-center">' . $room_info[$i]['cost_per_room'] . '</td>
+                                          <td class="text-center">' . $product_report['dos'] . '</td>
                                           
                                        </tr>
                                     </tbody>';
